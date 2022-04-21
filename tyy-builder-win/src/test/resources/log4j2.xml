@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--    Log level and priority order: OFF> FATAL> ERROR> WARN> INFO> DEBUG> TRACE> ALL -->
+<configuration monitorInterval="30">
+    <Properties>
+        <property name="LOG_PATTERN_FILE" value="%date{yyyy-MM-dd HH:mm:ss} %-5level %l - %msg%n"/>
+        <property name="FILE_PATH" value="./logs/"/>
+    </Properties>
+
+    <appenders>
+        <!--    info config-->
+        <RollingFile name="RollingFile" fileName="${FILE_PATH}/dix-${sys:DIPID}.log" filePattern="${FILE_PATH}/dix-${sys:DIPID}-%i.log">
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${LOG_PATTERN_FILE}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="50MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </appenders>
+
+    <loggers>
+        <Logger name="com.uinnova.di.dip.heartbeat" level="INFO" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+        <Logger name="org.ehcache.impl.internal.spi.copy" level="INFO" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+        <Logger name="org.ehcache.core.internal.service" level="INFO" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+        <Logger name="org.ehcache.core" level="INFO" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+        <Logger name="org.ehcache.impl.internal.spi.serialization" level="INFO" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+        <Logger name="org.ehcache.impl.internal.spi.serialization" level="INFO" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+        <logger name="org.springframework.security" level="DEBUG"/>
+        <logger name="org.springframework" level="WARN"/>
+        <logger name="org.thymeleaf" level="WARN"/>
+        <logger name="springfox" level="WARN"/>
+        <logger name="com.ulisesbocchio" level="WARN"/>
+        <logger name="org.hibernate" level="WARN"/>
+        <logger name="com.alibaba.nacos" level="WARN"/>
+        <logger name="com.alibaba.cloud" level="ERROR"/>
+        <logger name="org.apache.http" level="INFO"/>
+        <logger name="org.elasticsearch" level="INFO"/>
+        <logger name="org.apache.kafka" level="WARN"/>
+        <logger name="io.netty" level="INFO"/>
+        <logger name="org.redisson" level="WARN"/>
+        <logger name="com.netflix" level="ERROR"/>
+        <logger name="okhttp3" level="WARN"/>
+        <root level="DEBUG">
+            <appender-ref ref="RollingFile"/>
+        </root>
+    </loggers>
+</configuration>
